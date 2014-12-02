@@ -27,9 +27,13 @@ module.exports = function (grunt) {
             target: {
                 src: ['src/**/*.js']
             }
+        },
+
+        mocha_phantomjs: {
+            all: ['tests/harness.html']
         }
     });
 
-    grunt.registerTask('default', ['jshint', 'concat']);
+    grunt.registerTask('default', ['jshint', 'concat', 'mocha_phantomjs']);
 
 };

@@ -4,6 +4,10 @@ ValidationEngine is a simple JavaScript library that can run validation rules. T
 
 ### This is an early pre-alpha commit. This should not be used in production or for development yet.
 
+## Dependencies
+
+The library expects lodash (https://github.com/lodash/lodash) to be loaded anad available.
+
 ## Code Example
 
 Coming soon.

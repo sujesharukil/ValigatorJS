@@ -1,0 +1,32 @@
+{
+  "name": "ValidationEngine",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sujesharukil/ValidationEngine",
+  "authors": [
+    "Sujesh Arukil <sujesharukil@gmail.com>"
+  ],
+  "description": "A simple JavaScript Validation Engine",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "Validation"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "scripts",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mocha": "~2.0.1",
+    "chai": "~1.10.0"
+  },
+  "dependencies": {
+    "lodash": "~2.4.1"
+  }
+}

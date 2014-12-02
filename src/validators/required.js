@@ -1,4 +1,4 @@
-(function (global) {
+(function (global, _) {
     'use strict';
     global.validationEngine = global.validationEngine || {};
 
@@ -6,7 +6,7 @@
         validators = global.validationEngine.validators,
         requiredValidator = {
             validate: function (value) {
-                return value !== '';
+                return !_.isEmpty(value);
             },
             message: 'This field is required.'
         };
@@ -14,4 +14,4 @@
 
     validationEngine.validators.required = requiredValidator;
 
-}(window));
+}(window, _));

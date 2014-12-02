@@ -1,20 +1,47 @@
 (function (root, factory) {
     if (typeof exports === 'object') {
         //commonJS
-        factory(exports, window);
+        factory(window, exports, require('lodash'));
     }
     else if (typeof define === 'function' && define.amd) {
         //AMD. Register as an anonymous module.
-        define(['exports'], factory.bind(this, window));
+        define(['exports', 'lodash'], factory.bind(this, window));
     }
     else {
         // Browser globals
-        factory((root.commonJsStrict = {}), window);
+        factory(window, (root.commonJsStrict = {}), window._);
     }
-}(this, function (exports, window) {
+}(this, function (window, exports, _) {
 
 
-(function (global) {
+(function (global, _) {
+    'use strict';
+    global.validationEngine = global.validationEngine || {};
+
+    var validationEngine = global.validationEngine,
+        validators = global.validationEngine.validators,
+        numericValidator = {
+            validate: function (value, options) {
+                options = options || {};
+                if (value === '') {
+                    return true;
+                }
+                var separator = options.separator || '.';
+                if (separator !== '.') {
+                    value = value.replace(separator, '.');
+                }
+
+                return !_.isNaN(parseFloat(value, 10)) && _.isFinite(value);
+            },
+            message: 'This field is not a valid number.'
+        };
+
+    validationEngine.validators = validationEngine.validators || {};
+
+    validationEngine.validators.numeric = numericValidator;
+
+}(window, _));
+(function (global, _) {
     'use strict';
     global.validationEngine = global.validationEngine || {};
 
@@ -22,7 +49,7 @@
         validators = global.validationEngine.validators,
         requiredValidator = {
             validate: function (value) {
-                return value !== '';
+                return !_.isEmpty(value);
             },
             message: 'This field is required.'
         };
@@ -30,7 +57,7 @@
 
     validationEngine.validators.required = requiredValidator;
 
-}(window));
+}(window, _));
 (function (global) {
     'use strict';
 
