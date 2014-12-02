@@ -1,3 +1,5 @@
+/*! ValidationEngine v0.0.1 - 2014-12-01 
+Author: Sujesh Arukil*/
 (function (root, factory) {
     if (typeof exports === 'object') {
         //commonJS
