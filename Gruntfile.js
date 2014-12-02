@@ -13,7 +13,7 @@ module.exports = function (grunt) {
         concat: {
             options: bannerContent,
             target: {
-                src: ['src/prefix.tmp', 'src/validators/**/*.js', 'src/core-engine.js', 'src/configure.js', 'src/postfix.tmp'],
+                src: ['src/prefix.tpl', 'src/validators/**/*.js', 'src/core-engine.js', 'src/configure.js', 'src/postfix.tpl'],
                 dest: 'dist/validationEngine.js'
             }
         },
