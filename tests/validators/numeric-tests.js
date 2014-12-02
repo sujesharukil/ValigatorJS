@@ -14,6 +14,8 @@ describe('Numeric Validator', function () {
         expect(numericValidator.validate('123abc')).to.equal(false);
         expect(numericValidator.validate('123-123')).to.equal(false);
         expect(numericValidator.validate('01/01/2010')).to.equal(false);
+        expect(numericValidator.validate('')).to.equal(true);
+        expect(numericValidator.validate(undefined)).to.equal(false);
     });
 
     it('should define a default message', function () {
