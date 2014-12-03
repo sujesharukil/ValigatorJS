@@ -1,7 +1,8 @@
 {
-  "name": "ValidationEngine",
+  "name": "valigatorjs",
   "version": "0.0.1",
   "homepage": "https://github.com/sujesharukil/ValidationEngine",
+  "main": ["dist/validationEngine.js", "dist/validationEngine.min.js"],
   "authors": [
     "Sujesh Arukil <sujesharukil@gmail.com>"
   ],
@@ -10,10 +11,9 @@
     "globals"
   ],
   "keywords": [
-    "Validation"
+    "JavaScript Validation"
   ],
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",

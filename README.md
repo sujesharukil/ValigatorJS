@@ -1,6 +1,6 @@
 ## Synopsis
 
-ValidationEngine is a simple JavaScript library that can run validation rules. The library is small and concentrates purely on data validation and does not include html element validations. This allows the developers full freedom in separating out the view and model concerns.
+ValigatorJS is a simple JavaScript library that can run validation rules. The library is small and concentrates purely on data validation and does not include html element validations. This allows the developers full freedom in separating out the view and model concerns.
 
 ### This is an early pre-alpha commit. This should not be used in production or for development yet.
 
