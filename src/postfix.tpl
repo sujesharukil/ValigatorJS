@@ -1,3 +1,5 @@
 
-    return exports;
+    validationEngine.ValidationEngineCore = ValidationEngineCore;
+    
+    return exports.validationEngine;
 }));

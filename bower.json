@@ -1,6 +1,6 @@
 {
   "name": "valigatorjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/sujesharukil/ValidationEngine",
   "main": ["dist/validationEngine.js", "dist/validationEngine.min.js"],
   "authors": [
