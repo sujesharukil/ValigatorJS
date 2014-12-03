@@ -1,3 +1,3 @@
 
-    return window.validationEngine;
+    return exports;
 }));

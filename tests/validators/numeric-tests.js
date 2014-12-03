@@ -1,3 +1,5 @@
+/*global describe, expect, it, validationEngine */
+
 describe('Numeric Validator', function () {
     var numericValidator = validationEngine.validators.numeric;
 

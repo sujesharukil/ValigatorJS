@@ -1,106 +1,103 @@
-(function (global) {
-    'use strict';
+/*global _, validationEngine*/
 
-    var validationEngine = global.validationEngine || {},
-        validators = [],
-        messages = [],
-        config,
-        validate,
-        hasErrors,
-        getMessages,
-        configure,
-        assign,
-        addValidators;
+var ValidationEngineCore = function () {
+    this.config = {};
+    this.validation = {};
+};
 
-    assign = function (object, source, customizer) {
-        var index = 0,
-            key,
-            props = Object.keys(source),
-            length = props.length;
+ValidationEngineCore.prototype.validate = function (dataObjectToValidate) {
+    var self = this,
+        resultOK,
+        keys;
+    
+    this.resetValidationErrors();
+    //retrieve all the keys from the object. This will be utilized to run the appropriate validators from the config
+    keys = Object.keys(dataObjectToValidate);
 
-        while (index < length) {
-            key = props[index];
-            object[key] = customizer ? customizer(object[key], source[key], key, object, source) : source[key];
-            index += 1;
+    //loop through each key
+    keys.forEach(function (k) {
+        var validatorConfig = self.config[k],
+            fieldValidators;
+
+        if (!validatorConfig) {
+            //did not find a validator, so cannot validate.
+            return;
         }
-        return object;
-    };
 
-    configure = function (configuration) {
-        config = configuration;
-    };
+        //get the keys from the validation configuration
+        fieldValidators = Object.keys(validatorConfig);
 
-    addValidators = function (allValidators) {
-        validators = allValidators;
-    };
+        //if there are no keys, then there are no validators
+        if (!fieldValidators.length) {
+            return;
+        }
 
-    validate = function (dataObjectToValidate) {
-        var data,
-            msg,
-            type,
-            checker,
-            resultOK,
-            keys;
 
-        messages.length = 0;
+        if (self.validation[k] !== undefined && !self.validation[k].isValid) {
+            return;
+        }
 
-        keys = Object.keys(dataObjectToValidate);
-        keys.forEach(function (k) {
-            var validatorConfig = config[k],
+        //loop through the validators and execute
+        fieldValidators.forEach(function (v) {
+            var validator = self.validators[v],
                 message,
-                fieldValidators;
+                vconfig = validatorConfig[v];
 
-            if (!validatorConfig) {
-                return;
+            //if the configured validator is not in the collection, throw exception
+            if (validator === undefined) {
+                throw Error('Validation handler not specified');
             }
 
-            fieldValidators = Object.keys(validatorConfig);
+            //create the message that will be displayed if validation fails
+            message = vconfig.message || validator.message;
+            //execute the validator and retrieve the result
+            resultOK = validator.validate(dataObjectToValidate[k], vconfig);
 
-            if (!fieldValidators.length) {
-                return;
+
+            if (!resultOK) {
+                //validation failed
+                self.validation[k].isValid = false;
+                self.validation[k].messages.push(message);
             }
 
-            fieldValidators.forEach(function (v) {
-                var validator = validators[v],
-                    message,
-                    vconfig = validatorConfig[v].options;
-
-                if (!validator) {
-                    throw 'Validation handler not specified';
-                }
-
-                message = vconfig.message || validator.message;
-
-                resultOK = validator.validate(dataObjectToValidate[k], vconfig);
-                dataObjectToValidate.validation = dataObjectToValidate.validation || {};
-                dataObjectToValidate.validation[k] = {};
-
-                if (!resultOK) {
-                    dataObjectToValidate.validation[k].isValid = false;
-                    dataObjectToValidate.validation[k].message = message;
-                    messages.push(message);
-                } else {
-                    dataObjectToValidate.validation[k].isValid = true;
-                    dataObjectToValidate.validation[k].message = undefined;
-                }
-            });
         });
-    };
-
-    hasErrors = function () {
-        return !!messages.length;
-    };
-
-    getMessages = function () {
-        return messages;
-    };
-
-    assign(validationEngine, {
-        configure: configure,
-        validate: validate,
-        hasErrors: hasErrors,
-        getMessages: getMessages,
-        addValidators: addValidators
     });
+};
 
-}(window));
+ValidationEngineCore.prototype.hasErrors = function () {
+    var item = _.findKey(this.validation, { isValid: false});
+    if(item !== undefined && item !== ''){
+        return true;
+    }
+    
+    return false;
+};
+
+ValidationEngineCore.prototype.configure = function (configuration) {
+    _.extend(this.config, configuration);
+    this.resetValidationErrors();
+};
+
+ValidationEngineCore.prototype.resetValidationErrors = function(){
+    var self = this;
+    Object.keys(this.config).forEach(function(k){
+        self.validation[k] = {
+            isValid: true,
+            messages: []
+        };
+    });
+};
+
+ValidationEngineCore.prototype.addValidator = function (name, validator) {
+    if (typeof validator.validate !== 'function') {
+        throw Error('Validator must implement a validate function');
+    }
+
+    this.validators[name] = validator;
+};
+
+_.extend(validationEngine, ValidationEngineCore.prototype);
+
+validationEngine.init = function () {
+    ValidationEngineCore.apply(this);
+};

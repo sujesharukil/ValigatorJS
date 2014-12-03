@@ -1,17 +1,10 @@
-(function (global, _) {
-    'use strict';
-    global.validationEngine = global.validationEngine || {};
+/*global _, validationEngine*/
 
-    var validationEngine = global.validationEngine,
-        validators = global.validationEngine.validators,
-        requiredValidator = {
-            validate: function (value) {
-                return !_.isEmpty(value);
-            },
-            message: 'This field is required.'
-        };
-    validationEngine.validators = validationEngine.validators || {};
+var requiredValidator = {
+    validate: function (value) {
+        return !_.isEmpty(value);
+    },
+    message: 'This field is required.'
+};
 
-    validationEngine.validators.required = requiredValidator;
-
-}(window, _));
+validationEngine.validators.required = requiredValidator;

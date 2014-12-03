@@ -12,10 +12,11 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         concat: {
             options: { 
-                banner: bannerContent
+                banner: bannerContent,
+                stripBanners: true
             },
             target: {
-                src: ['src/prefix.tpl', 'src/validators/**/*.js', 'src/core-engine.js', 'src/configure.js', 'src/postfix.tpl'],
+                src: ['src/prefix.tpl', 'src/validators/**/*.js', 'src/core-engine.js', 'src/postfix.tpl'],
                 dest: 'dist/validationEngine.js'
             }
         },
