@@ -1,4 +1,4 @@
-/*! ValidationEngine v0.0.1 - 2014-12-03 
+/*! ValidationEngine v0.0.2 - 2014-12-03 
 Author: Sujesh Arukil*/
 (function (root, factory) {
     if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
@@ -166,5 +166,7 @@ validationEngine.init = function () {
     ValidationEngineCore.apply(this);
 };
 
-    return exports;
+    validationEngine.ValidationEngineCore = ValidationEngineCore;
+    
+    return exports.validationEngine;
 }));
