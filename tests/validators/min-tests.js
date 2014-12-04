@@ -7,5 +7,13 @@ describe('Min Validator', function(){
         expect(minValidator.validate(10, {
             min: 10
         })).to.equal(true);
+        
+        expect(minValidator.validate(9, { min: 10 })).to.equal(false);
+        
+        expect(minValidator.validate(11, { min: 10 })).to.equal(true);
+        
+        expect(minValidator.validate('11', { min: 10 })).to.equal(true);
+        
+        expect(minValidator.validate('asdasd', { min: 10 })).to.equal(false);
     });
 });
