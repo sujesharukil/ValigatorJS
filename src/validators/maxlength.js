@@ -3,7 +3,7 @@
 var maxlengthValidator = {
     validate: function (value, options) {
 
-        if (!value || value.trim().length === 0) {
+        if (!value) {
             return true;
         }
 
