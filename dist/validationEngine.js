@@ -1,4 +1,4 @@
-/*! ValidationEngine v0.0.2 - 2014-12-03 
+/*! ValidationEngine v0.0.2 - 2014-12-05
 Author: Sujesh Arukil*/
 (function (root, factory) {
     if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
@@ -21,6 +21,19 @@ Author: Sujesh Arukil*/
     var validationEngine = exports.validationEngine;
 
 
+var maxlengthValidator = {
+    validate: function (value, options) {
+
+        if (!value) {
+            return true;
+        }
+
+        return value.trim().length <= parseFloat(options.maxlength, 10);
+    },
+    message: 'The field should be no greater than %s'
+};
+
+validationEngine.validators.maxlength = maxlengthValidator;
 var minValidator = {
     validate: function (value, options) {
         var numericValidator = validationEngine.validators.numeric;
