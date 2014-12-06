@@ -34,6 +34,7 @@ var maxlengthValidator = {
 };
 
 validationEngine.validators.maxlength = maxlengthValidator;
+
 var minValidator = {
     validate: function (value, options) {
         var numericValidator = validationEngine.validators.numeric;
@@ -51,6 +52,20 @@ var minValidator = {
 };
 
 validationEngine.validators.min = minValidator;
+var minlengthValidator = {
+	validate: function (value, options) {
+
+		if (!value) {
+			return false;
+		}
+
+		return value.trim().length >= parseFloat(options.minlength, 10);
+	},
+	message: 'The field should be equal to or greater than %s'
+};
+
+validationEngine.validators.minlength = minlengthValidator;
+
 var numericValidator = {
     validate: function (value, options) {
         
